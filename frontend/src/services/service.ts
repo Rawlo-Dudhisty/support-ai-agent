@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_URL =
-  "http://localhost:8000/tickets";
+  import.meta.env.VITE_API_URL;
 
 export const processTicket =
   async (data: {
@@ -13,7 +13,7 @@ export const processTicket =
 
     const response =
       await axios.post(
-        `${API_URL}/process`,
+        `${API_URL}/tickets/process`,
         data,
         {
           headers: {
@@ -34,7 +34,7 @@ export const getTickets =
 
     const response =
       await axios.get(
-        API_URL,
+        `${API_URL}/tickets`,
         {
           headers: {
             Authorization:

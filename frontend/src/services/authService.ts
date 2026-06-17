@@ -1,13 +1,14 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8000/auth";
+const API_URL =
+  import.meta.env.VITE_API_URL;
 
 export const login = async (
   email: string,
   password: string
 ) => {
   const response = await axios.post(
-    `${API_URL}/login`,
+    `${API_URL}/auth/login`,
     {
       email,
       password,
@@ -23,7 +24,7 @@ export const register = async (
   password: string
 ) => {
   const response = await axios.post(
-    `${API_URL}/register`,
+    `${API_URL}/auth/register`,
     {
       username,
       email,
@@ -39,7 +40,7 @@ export const getCurrentUser =
 
     const response =
       await axios.get(
-        "http://localhost:8000/auth/me",
+        `${API_URL}/auth/me`,
         {
           headers: {
             Authorization:
