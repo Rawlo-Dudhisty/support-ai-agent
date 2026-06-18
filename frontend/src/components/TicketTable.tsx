@@ -1,4 +1,5 @@
 import type { Ticket } from "../types/ticket";
+import { updateTicketStatus } from "../services/service";
 
 interface Props {
   tickets: Ticket[];
@@ -25,6 +26,44 @@ export default function TicketTable({
         return "bg-slate-500/20 text-slate-400";
     }
   };
+
+  const getStatusColor = (
+    status: string
+  ) => {
+    switch (status?.toLowerCase()) {
+      case "resolved":
+        return "bg-green-500/20 text-green-400";
+
+      case "in progress":
+        return "bg-yellow-500/20 text-yellow-400";
+
+      case "open":
+        return "bg-blue-500/20 text-blue-400";
+
+      default:
+        return "bg-slate-500/20 text-slate-400";
+    }
+  };
+
+  const handleStatusUpdate =
+    async (
+      ticketId: number,
+      status: string
+    ) => {
+      try {
+        await updateTicketStatus(
+          ticketId,
+          status
+        );
+
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+        alert(
+          "Failed to update ticket status"
+        );
+      }
+    };
 
   return (
     <div
@@ -70,6 +109,14 @@ export default function TicketTable({
 
               <th className="text-left py-3">
                 Priority
+              </th>
+
+              <th className="text-left py-3">
+                Status
+              </th>
+
+              <th className="text-left py-3">
+                Actions
               </th>
 
               <th className="text-left py-3">
@@ -124,6 +171,85 @@ export default function TicketTable({
                   </span>
                 </td>
 
+                <td className="py-4">
+                  <span
+                    className={`
+                      px-3
+                      py-1
+                      rounded-full
+                      text-sm
+                      ${getStatusColor(
+                        ticket.status
+                      )}
+                    `}
+                  >
+                    {ticket.status}
+                  </span>
+                </td>
+
+                <td className="py-4">
+                  <div className="flex gap-2">
+
+                    <button
+                      onClick={() =>
+                        handleStatusUpdate(
+                          ticket.id,
+                          "Open"
+                        )
+                      }
+                      className="
+                      px-2
+                      py-1
+                      rounded
+                      bg-blue-600
+                      text-white
+                      text-xs
+                    "
+                    >
+                      Open
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        handleStatusUpdate(
+                          ticket.id,
+                          "In Progress"
+                        )
+                      }
+                      className="
+                      px-2
+                      py-1
+                      rounded
+                      bg-yellow-600
+                      text-white
+                      text-xs
+                    "
+                    >
+                      In Progress
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        handleStatusUpdate(
+                          ticket.id,
+                          "Resolved"
+                        )
+                      }
+                      className="
+                      px-2
+                      py-1
+                      rounded
+                      bg-green-600
+                      text-white
+                      text-xs
+                    "
+                    >
+                      Resolved
+                    </button>
+
+                  </div>
+                </td>
+
                 <td
                   className="
                   py-4
@@ -132,6 +258,7 @@ export default function TicketTable({
                 >
                   {ticket.description}
                 </td>
+
               </tr>
             ))}
           </tbody>

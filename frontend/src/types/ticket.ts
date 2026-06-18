@@ -18,5 +18,6 @@ export interface Ticket {
   description: string;
   category: string;
   priority: string;
-  status?: string;
+  status: string;
+  created_at?: string;
 }

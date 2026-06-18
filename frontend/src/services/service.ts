@@ -45,3 +45,29 @@ export const getTickets =
 
     return response.data;
 };
+
+export const updateTicketStatus =
+  async (
+    ticketId: number,
+    status: string
+  ) => {
+
+    const token =
+      localStorage.getItem("token");
+
+    const response =
+      await axios.put(
+        `${API_URL}/tickets/${ticketId}/status`,
+        {
+          status,
+        },
+        {
+          headers: {
+            Authorization:
+              `Bearer ${token}`,
+          },
+        }
+      );
+
+    return response.data;
+};

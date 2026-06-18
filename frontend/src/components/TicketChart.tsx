@@ -1,7 +1,7 @@
 import {
   ResponsiveContainer,
-  LineChart,
-  Line,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   Tooltip,
@@ -10,13 +10,18 @@ import {
 export default function TicketChart() {
 
   const data = [
-    { day: "Mon", tickets: 4 },
-    { day: "Tue", tickets: 7 },
-    { day: "Wed", tickets: 3 },
-    { day: "Thu", tickets: 9 },
-    { day: "Fri", tickets: 5 },
-    { day: "Sat", tickets: 8 },
-    { day: "Sun", tickets: 6 },
+    {
+      status: "Open",
+      count: 12,
+    },
+    {
+      status: "In Progress",
+      count: 5,
+    },
+    {
+      status: "Resolved",
+      count: 8,
+    },
   ];
 
   return (
@@ -38,27 +43,25 @@ export default function TicketChart() {
         mb-6
       "
       >
-        📈 Ticket Trends
+        📊 Ticket Status Analytics
       </h2>
 
       <ResponsiveContainer
         width="100%"
         height={300}
       >
-        <LineChart data={data}>
-          <XAxis dataKey="day" />
+        <BarChart data={data}>
+          <XAxis dataKey="status" />
 
           <YAxis />
 
           <Tooltip />
 
-          <Line
-            type="monotone"
-            dataKey="tickets"
-            stroke="#22d3ee"
-            strokeWidth={3}
+          <Bar
+            dataKey="count"
+            fill="#22d3ee"
           />
-        </LineChart>
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );

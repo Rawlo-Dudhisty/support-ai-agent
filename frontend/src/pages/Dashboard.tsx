@@ -43,10 +43,6 @@ export default function Dashboard() {
   const [status, setStatus] =
     useState("Waiting for ticket...");
 
-  useEffect(() => {
-    fetchTickets();
-  }, []);
-
   const fetchTickets = async () => {
     try {
       const data = await getTickets();
@@ -55,6 +51,13 @@ export default function Dashboard() {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    const loadTickets = async () => {
+      await fetchTickets();
+    };
+    loadTickets();
+  }, []);
 
   const handleSubmit = async () => {
     try {
@@ -106,29 +109,19 @@ export default function Dashboard() {
     }
   };
 
-  const totalTickets =
-    tickets.length;
+  const totalTickets = tickets.length;
 
-  const highPriority =
-    tickets.filter(
-      (t) =>
-        t.priority.toLowerCase() ===
-        "high"
-    ).length;
+const openTickets = tickets.filter(
+  (t) => t.status?.toLowerCase() === "open"
+).length;
 
-  const mediumPriority =
-    tickets.filter(
-      (t) =>
-        t.priority.toLowerCase() ===
-        "medium"
-    ).length;
+const inProgressTickets = tickets.filter(
+  (t) => t.status?.toLowerCase() === "in progress"
+).length;
 
-  const lowPriority =
-    tickets.filter(
-      (t) =>
-        t.priority.toLowerCase() ===
-        "low"
-    ).length;
+const resolvedTickets = tickets.filter(
+  (t) => t.status?.toLowerCase() === "resolved"
+).length;
 
   return (
     <div className="min-h-screen bg-slate-950">
@@ -232,32 +225,32 @@ export default function Dashboard() {
         <div className="grid grid-cols-4 gap-5 mb-8">
 
           <StatsCard
-            title="Total Tickets"
-            value={totalTickets.toString()}
-            icon={Ticket}
-            color="text-cyan-400"
-          />
+  title="Total Tickets"
+  value={totalTickets.toString()}
+  icon={Ticket}
+  color="text-cyan-400"
+/>
 
-          <StatsCard
-            title="High Priority"
-            value={highPriority.toString()}
-            icon={AlertTriangle}
-            color="text-red-400"
-          />
+<StatsCard
+  title="Open Tickets"
+  value={openTickets.toString()}
+  icon={AlertTriangle}
+  color="text-red-400"
+/>
 
-          <StatsCard
-            title="Medium Priority"
-            value={mediumPriority.toString()}
-            icon={Activity}
-            color="text-yellow-400"
-          />
+<StatsCard
+  title="In Progress"
+  value={inProgressTickets.toString()}
+  icon={Activity}
+  color="text-yellow-400"
+/>
 
-          <StatsCard
-            title="Low Priority"
-            value={lowPriority.toString()}
-            icon={BarChart3}
-            color="text-green-400"
-          />
+<StatsCard
+  title="Resolved"
+  value={resolvedTickets.toString()}
+  icon={BarChart3}
+  color="text-green-400"
+/>
 
         </div>
 

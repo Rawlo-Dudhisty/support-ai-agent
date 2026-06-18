@@ -69,7 +69,8 @@ export default function TicketForm({
         onChange={(e) =>
           setDescription(e.target.value)
         }
-        placeholder="Example: Customer payment was deducted but premium access was not activated..."
+        maxLength={1000}
+        placeholder="Describe your issue in detail. Example: Customer payment was deducted but premium access was not activated."
         className="
           w-full
           bg-slate-950
@@ -99,7 +100,7 @@ export default function TicketForm({
             text-sm
           "
         >
-          {description.length} characters
+          {description.length} / 1000 characters
         </span>
 
         <motion.button
@@ -109,6 +110,7 @@ export default function TicketForm({
           whileTap={{
             scale: 0.95,
           }}
+          disabled={!description.trim()}
           onClick={onSubmit}
           className="
             flex
@@ -119,6 +121,8 @@ export default function TicketForm({
             to-blue-600
             hover:from-cyan-400
             hover:to-blue-500
+            disabled:opacity-50
+            disabled:cursor-not-allowed
             px-6
             py-3
             rounded-xl
@@ -154,11 +158,11 @@ export default function TicketForm({
             text-slate-300
           "
         >
-          <span>🎯 Intent</span>
+          <span>🎯 Intent Analysis</span>
           <span>→</span>
-          <span>🧠 Context</span>
+          <span>🧠 Knowledge Search</span>
           <span>→</span>
-          <span>⚡ Resolution</span>
+          <span>⚡ AI Resolution</span>
         </div>
       </div>
     </motion.div>

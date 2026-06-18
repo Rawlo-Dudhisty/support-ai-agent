@@ -1,45 +1,71 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { login } from "../services/authService";
-// removed unused useNavigate import
-
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] =
     useState("");
 
+  useEffect(() => {
+    const token =
+      localStorage.getItem("token");
+
+    if (token) {
+      window.location.href =
+        "/dashboard";
+    }
+  }, []);
+
   const handleLogin = async () => {
-  try {
-    const result = await login(
-      email,
-      password
-    );
 
-    console.log(
-      "LOGIN RESPONSE:",
-      result
-    );
+    if (!email.trim()) {
+      alert("Please enter your email");
+      return;
+    }
 
-    localStorage.setItem(
-      "token",
-      result.access_token
-    );
+    if (!password.trim()) {
+      alert("Please enter your password");
+      return;
+    }
 
-    console.log(
-      "TOKEN SAVED:",
-      localStorage.getItem("token")
-    );
+    try {
+      const result = await login(
+        email,
+        password
+      );
 
-    window.location.href =
-      "/dashboard";
+      localStorage.setItem(
+        "token",
+        result.access_token
+      );
+
+      window.location.href =
+        "/dashboard";
 
     } catch (error: any) {
-    console.error(
-      "LOGIN ERROR:",
-      error.response?.data
-    );
 
-    console.error(error);
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data?.detail;
+
+      if (
+        message === "User not found"
+      ) {
+        alert(
+          "Account not found. Please register first."
+        );
+      } else if (
+        message === "Invalid password"
+      ) {
+        alert(
+          "Incorrect password."
+        );
+      } else {
+        alert(
+          message ||
+          "Login failed"
+        );
+      }
     }
   };
 
@@ -74,12 +100,26 @@ export default function Login() {
 
         <button
           onClick={handleLogin}
-          className="w-full bg-blue-600 py-3 rounded text-white"
+          className="w-full bg-blue-600 py-3 rounded text-white hover:bg-blue-700"
         >
           Login
         </button>
 
+        <p className="text-slate-400 mt-4 text-center">
+          Don't have an account?{" "}
+          <span
+            className="text-cyan-400 cursor-pointer"
+            onClick={() =>
+              window.location.href =
+                "/register"
+            }
+          >
+            Register
+          </span>
+        </p>
+
       </div>
+
     </div>
   );
 }
