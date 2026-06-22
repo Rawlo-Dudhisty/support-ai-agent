@@ -4,7 +4,7 @@
 
 SupportAI is a full-stack AI-powered customer support automation platform that helps organizations streamline ticket handling through intelligent classification, knowledge retrieval, and automated response generation.
 
-The system uses a multi-agent architecture built with LangGraph and Google Gemini to process customer support requests and generate context-aware responses automatically.
+The system uses a multi-agent architecture built with LangGraph and Google Gemini to automatically process customer support requests and generate context-aware responses.
 
 ---
 
@@ -269,3 +269,10 @@ Rawlo Dudhisty
 B.Tech CSE | Full Stack Developer | AI Enthusiast
 
 GitHub: https://github.com/Rawlo-Dudhisty
+Live: https://support-ai-agent-kappa.vercel.app
+<img width="1316" height="567" alt="Screenshot 2026-06-17 162506" src="https://github.com/user-attachments/assets/88a49a1f-1c32-4f3e-8a3f-a0dd4ae1ad10" />
+<img width="1313" height="626" alt="Screenshot 2026-06-22 150208" src="https://github.com/user-attachments/assets/80140fdd-e318-4f98-84ae-a4ee6a91b25f" />
+<img width="1353" height="619" alt="Screenshot 2026-06-22 150048" src="https://github.com/user-attachments/assets/14d0f563-b28d-48d5-8630-bd7b8d8eac6b" />
+
+
+
