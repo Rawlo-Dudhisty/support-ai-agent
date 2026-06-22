@@ -14,6 +14,8 @@ from app.database.models import User
 router = APIRouter()
 
 
+
+
 @router.post("/register")
 def register(user: UserRegister):
 
@@ -26,7 +28,17 @@ def register(user: UserRegister):
     if existing_user:
         raise HTTPException(
             status_code=400,
-            detail="User already exists"
+            detail="Email already exists"
+        )
+
+    existing_username = db.query(User).filter(
+        User.username == user.username
+    ).first()
+
+    if existing_username:
+        raise HTTPException(
+            status_code=400,
+            detail="Username already exists"
         )
 
     new_user = User(
@@ -41,7 +53,6 @@ def register(user: UserRegister):
     return {
         "message": "User registered successfully"
     }
-
 
 @router.post("/login")
 def login(user: UserLogin):
@@ -77,7 +88,6 @@ def login(user: UserLogin):
         "access_token": token,
         "token_type": "bearer"
     }
-
 
 @router.get("/me")
 def get_me(
